@@ -1,0 +1,190 @@
+﻿@using SiteMock.Models.Admin
+@using SiteMock.Models.Identity
+@using Newtonsoft.Json
+@using SiteMock.Contracts
+
+@{
+    ViewData["Title"] = "Create Gift Card : Step one  - select from Flotation Therapy | Hyperbaric Oxygen Therapy | Infrared Sauna | Biomat | Ahha Wellness Spa , Strathpine, Brisbane, QLD";
+    ViewData["MetaDescription"] = "We offer gift cards for our Flotation Therapy, Hyperbaric Oxygen Therapy, Infrared Sauna and Biomat. All giftcards are for services at our center in Strathpine, Brisbane, QLD";
+    ViewData["MetaKeywords"] = "gift card, gift, float, flotation, flotation therapy, hyperbaric oxygen, oxgyen therapy, hyperbaric oxygen therapy, infrared sauna, ir sauna, biomat, ahha wellness, ahha wellness spa , wellness, strathpine";
+    ViewData["MetaCanonical"] = "https://www.ahhawellnessspa.com.au/giftcard/stepone?location=strathpine";
+}
+
+<div class="row">
+    <div class="col-12 text-center">
+        <h2>Step 1 of 3</h2>
+        <h4>Select Services.</h4>
+    </div>
+</div>
+
+<div class="row spacerows sectiondivider">
+    <div class="col text-center">
+        <img src="~/images/shared/sectionDivider.png" />
+    </div>
+</div>
+
+<br />
+
+@{
+    SpaBusinessRules businessRules = ViewData["businessrules"] as SpaBusinessRules;
+    var user = ViewData["user"] as MinervexUser;
+
+    if (user != null)
+    {
+        if (user.UserRoles != null)
+        {
+            if (user.UserRoles.Contains(WebIdentityConstants.UserRole_strathpineMember))
+            {
+                <input id="alreadyMember" type="hidden" value="true" />
+            }
+            else
+            {
+                <input id="alreadyMember" type="hidden" value="false" />
+            }
+        }
+        else
+        {
+            <input id="alreadyMember" type="hidden" value="false" />
+        }
+    }
+    else
+    {
+        <input id="alreadyMember" type="hidden" value="false" />
+    }
+
+    var categories = ViewData["availableCategories"] as List<string>;
+    var prices = ViewData["prices"] as Dictionary<string, Dictionary<int, double>>;
+
+    <input id="availableCategories" type="hidden" value="@JsonConvert.SerializeObject(categories)" />
+
+    foreach (var category in categories)
+    {
+        <input id="availableSessionFor-@category" type="hidden" value="@JsonConvert.SerializeObject(prices[category].Keys)" />
+
+        foreach (var session in prices[category].Keys)
+        {
+            <input id="price-@category-@session" type="hidden" value="@prices[category][session]" />
+        }
+    }
+
+    foreach (var category in categories)
+    {
+        <div class="row no-gutters">
+            <div class="col-3 text-center centertext-vertical">
+                @category
+            </div>
+
+            <div class="col-6 text-center centertext-vertical">
+                <button data-category="@category" data-function="-" class="btn btn-default changeSessionLength">-</button> <span id="sessionspan-@category"></span> min <button data-category="@category" data-function="+" class="btn btn-default changeSessionLength">+</button>
+            </div>
+
+            <div class="col-2 text-center centertext-vertical">
+                <span style="font-weight: bold"> $<span id="pricespan-@category"></span></span>
+            </div>
+
+            <div class="col-1 text-center centertext-vertical">
+                <button data-category="@category" class="btn btn-primary addServiceButton">+</button>
+            </div>
+        </div>
+
+        <br />
+    }
+}
+
+<br />
+<hr />
+<br />
+<div class="row">
+    <div class="col-12 text-center">
+        <h4>Your Card Gift Card</h4>
+    </div>
+    <br />
+</div>
+
+<br />
+
+<div id="giftCardContainer" style="margin-top: 10px;">
+
+</div>
+
+<div id="membershipDiscountRow" hidden="hidden" class="row" style="margin-top: 10px;">
+
+    <div class="col-4 text-center">
+        Membership discount
+    </div>
+
+    <div class="col-4 text-center">
+
+    </div>
+
+    <div class="col-4 text-center">
+        - $ <span id="membershipPricespan">20.00</span>
+    </div>
+</div>
+
+<div hidden="hidden" id="bulkDiscountRow" class="row" style="margin-top: 10px;">
+    <br />
+    <hr />
+    <div class="col-4 text-center">
+        Bulk Booking Discount
+    </div>
+
+    <div class="col-4 text-center">
+        <div>
+
+        </div>
+    </div>
+
+    <div class="col-4 text-center">
+        - $ <span id="bulkdiscountPricespan"></span>
+    </div>
+</div>
+
+<br />
+<hr />
+
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col-4 text-center">
+        <h4>Total</h4>
+    </div>
+
+    <div class="col-4 text-center">
+
+        <div>
+
+        </div>
+    </div>
+
+    <div class="col-4 text-center">
+        <h4>$ <span id="totalspan"></span></h4>
+    </div>
+</div>
+
+<br />
+<br />
+
+<div class="row">
+    <div class="col-12">
+        <div id="discountExplinationContainer">
+
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-12 text-center">
+        <button id="submitButton" type="submit" class="btn btn-primary">Next - Gift Card Details</button>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <script src="~/source/jquery/dist/jquery.min.js"></script>
+    <script src="~/source/giftcard/giftcardstepone.js"></script>
+}
+
+

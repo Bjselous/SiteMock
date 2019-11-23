@@ -1,0 +1,122 @@
+﻿@{
+    var pageServiceTitle = "";
+
+    switch (ViewData["category"])
+    {
+        case "FLOAT":
+            pageServiceTitle = "flotation therapy. Sensory deprivation in our float tanks.";
+            break;
+        case "IRSAUNA":
+            pageServiceTitle = "infrared sauna. Detox in our IR Sauna.";
+            break;
+        case "BIOMAT":
+            pageServiceTitle = "biomat. Far infrared and negative ions.";
+            break;
+        case "MHBOT":
+            pageServiceTitle = "mild hyperbaric oxygen therapy (mHBOT). Oxygen powered wellness.";
+            break;
+    }
+
+    ViewData["Title"] = "Time selection to book our " + pageServiceTitle + " | Ahha Wellness Spa , Strathpine, Brisbane, QLD";
+    ViewData["MetaDescription"] = "Select which time slot you would like to book your" + ViewData["category"];
+    ViewData["MetaKeywords"] = "float, flotation, flotation therapy, hyperbaric oxygen, oxgyen therapy, hyperbaric oxygen therapy, infrared sauna, ir sauna, biomat, ahha wellness, ahha wellness spa , wellness, strathpine";
+
+    @Html.Hidden("dateToDisplay", ViewData["dateToDisplay"]);
+    @Html.Hidden("selectedCenter", ViewData["centerId"]);
+    @Html.Hidden("selectedSession", ViewData["selectedSession"]);
+
+    var availableSessions = ViewData["availableSessions"] as List<int>;
+
+    var sessionsAsString = "";
+    foreach (var session in availableSessions)
+    {
+        sessionsAsString += session + " ";
+    }
+
+    @Html.Hidden("availableSessionsAsString", sessionsAsString);
+    @Html.Hidden("category", ViewData["category"]);
+
+}
+
+<link href="~/css/calendar.css" rel="stylesheet" />
+
+<div class="row" style="margin-top:10px;">
+    <div class="col-3 text-center centertext-vertical">
+        <button id="calendarBackButton" class="btn btn-light calendarNavigationButton"><<</button>
+    </div>
+    <div class="col-6">
+        <div class="row text-center ">
+            <h4 class="calendarHeading" id="dayHeading" style=""></h4>
+        </div>
+    </div>
+    <div class="col-3 text-center centertext-vertical">
+        <button id="calendarForwardButton" class="btn btn-light calendarNavigationButton">>></button>
+    </div>
+
+    <div class="col-12 text-center ">
+        <p class="calendarHeading" id="monthHeading" style=""></p>
+    </div>
+</div>
+
+<br />
+
+
+<div class="row" style="margin-top: 5px; margin-bottom: 5px;">
+    <div style="margin: 0 auto">
+        <div style="display: table;">
+            <div style="padding-left: 5px; display:table-cell; vertical-align: middle;">
+                <h5> Session Length </h5>
+            </div>
+            <div style="padding-left: 5px; float: left;">
+                @foreach (var session in availableSessions)
+                {
+                    <button class="btn btn-light" id="@(session)Btn" data-sessionLength="@(session)">@session Min</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div id="availablityContainer">
+
+    <div id="loadingSpinner" class="text-center">
+        <div style="width: 3rem; height: 3rem;" class="spinner-border text-success" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div class="text-center">
+        Loading....
+    </div>
+</div>
+
+<div class="modal" id="serviceAddedModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Booking Added to Cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Your booking has been added to your cart, you can add additional bookings by clicking on the "keep shopping" button.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Keep shopping</button>
+                <a href="~/cart/getcart" class="btn btn-primary">Review cart and checkout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <script src="~/source/jquery/dist/jquery.js"></script>
+    <script src="~/source/moment/moment-with-locales.min.js"></script>
+    <script src="~/source/dayBookingScripts.js"></script>
+}
+

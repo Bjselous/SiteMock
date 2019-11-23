@@ -1,0 +1,64 @@
+﻿.calendarHeading 
+{
+    text-align: center;
+    width: 100%;
+    font-size: 3em;
+}
+
+.calendarButtons 
+{
+    width: 50%;
+    padding: 1em;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.week-day {
+    width: 14%;
+    min-height: 2em;
+    text-align: center;
+    margin-top: .1em;
+    margin-bottom: .1em;
+    border-radius: 5px;
+    border: 1px solid #f2f2f2;
+}
+
+.day-available {
+    width: 14%;
+    min-height: 2em;
+    text-align: center;
+    color: black;
+    margin-top: .1em;
+    margin-bottom: .1em;
+    border-radius: 5px;
+    border: 1px solid #f2f2f2;
+}
+
+.day-unavailable {
+    width: 14%;
+    min-height: 2em;
+    color: lightgray;
+    text-align: center;
+    margin-top: .1em;
+    margin-bottom: .1em;
+    border-radius: 5px;
+    border: 1px solid #f2f2f2;
+}
+
+.daytext {
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.day-today {
+    color: red;
+    font-weight: bolder;
+    border: 1px solid #fc9f9f;
+}
+
+.calendarNavigationButton {
+    font-weight: bold;
+    font-size: 1.5em;
+    border-color: #c6c6c6;
+    border-width: 1px;
+}

@@ -1,48 +1,156 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="180x180" href="~/images/shared/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/images/shared/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/images/shared/favicon-16x16.png">
+    <link rel="manifest" href="~/images/shared/site.webmanifest">
+
+    <title>@ViewBag.Title</title>
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap-grid.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap-reboot.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/lib/fontawesome-free-5.11.2/css/all.css" rel="stylesheet" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SiteMock</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    @{
+        var metaDescription = ViewData["MetaDescription"] as string;
+        if (!string.IsNullOrEmpty(metaDescription))
+        {
+            <meta name="description" content="@metaDescription" />
+        }
+
+        var metaKeywords = ViewData["MetaKeywords"] as string;
+        if (!string.IsNullOrEmpty(metaKeywords))
+        {
+            <meta name="keywords" content="@metaKeywords" />
+        }
+
+        var metaCanonical = ViewData["MetaCanonical"] as string;
+        if (!string.IsNullOrEmpty(metaKeywords))
+        {
+            <link rel="canonical" href="@metaCanonical" />
+        }
+    }
+
 </head>
 <body>
+    
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SiteMock</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+        @RenderSection("Header", required: false)
+        <script src="~/source/layout/layoutScript.js"></script>
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <img src="~/images/shared/logosmall_greybackground.png" />
+
+
+            @if (@ViewBag.Title != "Float Therapy | Infrared Sauna | Hyperbaric Oxygen Therapy | Biomat – Strathpine, Brisbane, QLD") // If this is the home page, remove the ahha wellness spa from the nav
+            {
+                <a style="margin-left: 5px;" href="~/" class="navbar-brand"> Ahha Wellness</a>
+            }
+
+
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav">
+                    <!--<a href="~/home/template" class="nav-item nav-link">Template</a>-->
+                    <a href="~/" class="nav-item nav-link active">Home</a>
+                    <a href="~/services/float" class="nav-item nav-link">Float</a>
+                    <a href="~/services/sauna" class="nav-item nav-link">IR Sauna</a>
+                    <a href="~/services/mhbot" class="nav-item nav-link">mHBOT</a>
+                    <a href="~/services/biomat" class="nav-item nav-link">Biomat</a>
+                    <a href="~/giftcard/stepone?location=strathpine" class="nav-item nav-link">Gift Cards</a>
+                    
                 </div>
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" id="cartnavlinkcontainer">
+                        <a class="nav-link" href="~/cart/getcart">
+                            2  <i class="fas fa-shopping-cart"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-item nav-link" asp-controller="Identity" asp-action="Login">Login</a>
+                    </li>
+                </ul>
             </div>
         </nav>
+
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+
+
+    <div class="row sectiondivider">
+        <div class="col text-center">
+            <img src="~/images/shared/sectionDivider.png" />
+        </div>
+    </div>
+
+    <footer>
         <div class="container">
-            &copy; 2019 - SiteMock - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+            <div class="row text-center" style="margin-top: 10px;">
+                <div class="col">
+
+                    <h3>Our Mission</h3>
+                    <p>Our mission is to provide a purpose-built space for our clients to relax, recover and optimise their health. Ahha Wellness Spa offers Flotation Therapy, Mild Hyperbaric Oxygen Therapy (mHBOT), Infrared Sauna and Biomat sessions.</p>
+                    <br />
+                    <p>To help us serve and provide real value to our clients we offer membership and bulk booking discounts, as well as great offers in-store.</p>
+                    <br />
+                </div>
+            </div>
+
+            <div class="row">
+                <br />
+                <hr />
+
+                <div class="col-md-4 text-center">
+                    <a href="~/policy/booking">Booking Policy</a><br />
+                    <a href="~/policy/membership">Membership Policy</a><br />
+                    <a href="~/policy/privacy">Privacy Policy</a><br />
+                    <a href="~/policy/cancellation">Cancellation Policy</a><br />
+
+                </div>
+                <div class="col-md-4 text-center">
+                    <a href="~/faq/index">FAQs</a><br />
+                    <a href="~/home/sitemap">Sitemap</a><br />
+                </div>
+
+                <div class="col-md-4 text-center">
+                    <p> Follow Us </p>
+                    <div class="social-buttons">
+                        <a href="https://www.facebook.com/Ahha-Wellness-Spa-479585789280705"><img src="~/images/shared/FacebookIcon.png" /></a>
+                        <a href="https://www.instagram.com/ahhawellnessspa/"><img src="~/images/shared/instagramIcon.png" /></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row text-center">
+                <div class="col">
+                    &copy; 2019 - AHHA Wellness
+                    <p>Unit 2/429 Gympie Road, Strathpine, QLD, 4500 | admin@ahhawellnessspa.com.au | 1800 002 442 </p>
+                </div>
+            </div>
+
+
+
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script src="~/source/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    
     @RenderSection("Scripts", required: false)
 </body>
 </html>

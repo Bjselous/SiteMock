@@ -20,13 +20,13 @@ namespace SiteMock.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View("Index");
+        }
+        public IActionResult Ignore()
+        {
+            return View("Ignore");
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
